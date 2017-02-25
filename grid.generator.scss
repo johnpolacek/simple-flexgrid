@@ -7,15 +7,9 @@
 
 // Project Page: https://github.com/johnpolacek/standard-grid-generator
 
-
 // box-sizing: border-box is required
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
-
-.grid {
-    display: flex;
-    flex-wrap: wrap;
-  }
 
 @mixin spacingHelpers($prefix, $i, $spaceUnit){
   .#{$prefix}pad-#{$i} { padding: $spaceUnit; }
@@ -35,10 +29,16 @@ html { box-sizing: border-box; }
 }
 @mixin gridClasses($_prefix:'', $gridColumns:12, $spaceUnits:(8px,16px,32px), $breakpoint_min:'', $breakpoint_max:''){
   
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   // grid classes
   @for $i from 1 through $gridColumns {
     .#{$_prefix}col-#{$i} {
-      @extend .#{$_prefix}grid;
+      display: flex;
+      flex-wrap: wrap;
       flex: 0 0 auto;
       flex-basis: percentage($i/$gridColumns);
       width: percentage($i/$gridColumns);
@@ -66,22 +66,6 @@ html { box-sizing: border-box; }
 
 @mixin padHalf($halfUnit: 4px) {
   @include spacingHelpers('', 'half', $halfUnit);
-}
-
-// use grid-flex for equal height grid containers
-@mixin gridFlex() {
-  .grid-flex {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -moz-box-wrap: wrap;
-    -webkit-box-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    -ms-flexbox-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-  }
 }
 
 // generate grid classes for each breakpoint, defaults defined below
@@ -135,5 +119,31 @@ html { box-sizing: border-box; }
         }
       }
     }
+  }
+
+  .grid-align-right { justify-content: flex-end; }
+  .grid-align-center { justify-content: center; }
+  .grid-align-justify { justify-content: space-between; }
+  .grid-align-spaced { justify-content: space-around; }
+  .grid-align-top { align-items: flex-start; }
+  .grid-align-self-top { self: flex-start; }
+  .grid-align-bottom { align-items: flex-end; }
+  .grid-align-self-bottom { self: flex-end; }
+  .grid-align-middle { align-items: center; }
+  .grid-align-self-middle { self: center; }
+  .grid-align-stretch { align-items: stretch; }
+  .grid-align-self-stretch { self: stretch; }
+
+  .grid-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -moz-box-wrap: wrap;
+    -webkit-box-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flexbox-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 }
