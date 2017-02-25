@@ -12,7 +12,7 @@
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
-.row,.col {
+.grid {
     display: flex;
     flex-wrap: wrap;
   }
@@ -38,14 +38,20 @@ html { box-sizing: border-box; }
   // grid classes
   @for $i from 1 through $gridColumns {
     .#{$_prefix}col-#{$i} {
-      display: flex;
+      @extend .#{$_prefix}grid;
       flex: 0 0 auto;
       flex-basis: percentage($i/$gridColumns);
       width: percentage($i/$gridColumns);
-      flex-wrap: wrap;
     }
   }
-  
+
+  @for $i from 1 through $gridColumns {
+    .#{$_prefix}row-#{$i} {
+      display: flex;
+      height:percentage($i/$gridColumns);
+    }
+  }
+
   // spacing helper classes
   @if $spaceUnits {
     $i : 1;
@@ -55,13 +61,7 @@ html { box-sizing: border-box; }
     }
     @include spacingHelpers($_prefix, 0, 0);
   }
-
-  @for $i from 1 through $gridColumns {
-    .#{$_prefix}row-#{$i} {
-      display: flex;
-      height:percentage($i/$gridColumns);
-    }
-  }
+  
 }
 
 @mixin padHalf($halfUnit: 4px) {
